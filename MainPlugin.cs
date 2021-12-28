@@ -47,7 +47,10 @@ namespace RegisterAllServers
             foreach (var server in ConfigUtils.config.Servers)
             {
                 server.CreateToken();
-                server.CreateUser(username,userpwd,group);
+                if (server.CreateUser(username, userpwd, group)["status"].ToString()=="200")
+                {
+                    TShock.Log.ConsoleInfo($"[{username}] 成功在 [{server.ConvertToUrl()}] 注册");
+                }
             }
         }
 
