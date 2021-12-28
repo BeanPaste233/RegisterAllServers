@@ -30,7 +30,14 @@ namespace RegisterAllServers
         {
             ServerApi.Hooks.GamePostInitialize.Register(this,OnPostInitialize);
             AccountHooks.AccountCreate += OnRegister;
+            GeneralHooks.ReloadEvent += OnReload;
 
+        }
+
+        private void OnReload(ReloadEventArgs e)
+        {
+            ConfigUtils.LoadConfig();
+            TShock.Log.ConsoleInfo("[RegisterAllServers] 配置文件已重载");
         }
 
         private void OnPostInitialize(EventArgs args)
