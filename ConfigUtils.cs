@@ -37,10 +37,10 @@ namespace RegisterAllServers
     }
     public class Config
     {
-        public List<ServerInfo> Servers { get; set; }
+        public List<ServerInfo> Servers= new List<ServerInfo>();
         public Config() 
         {
-            Servers = new List<ServerInfo>();
+           
         }
     }
 }

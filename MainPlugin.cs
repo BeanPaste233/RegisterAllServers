@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using TerrariaApi.Server;
+using TShockAPI;
 using TShockAPI.Hooks;
 
 namespace RegisterAllServers
@@ -27,12 +28,27 @@ namespace RegisterAllServers
 
         public override void Initialize()
         {
+            ServerApi.Hooks.GamePostInitialize.Register(this,OnPostInitialize);
             AccountHooks.AccountCreate += OnRegister;
+
+        }
+
+        private void OnPostInitialize(EventArgs args)
+        {
+            ConfigUtils.LoadConfig();
+            TShock.Log.ConsoleInfo($"[RegisterAllServers] 已加载 {ConfigUtils.config.Servers.Count} 个服务器");
         }
 
         private void OnRegister(AccountCreateEventArgs e)
         {
-            
+            var username = e.Account.Name;
+            var userpwd = e.Account.Password;
+            var group = e.Account.Group;
+            foreach (var server in ConfigUtils.config.Servers)
+            {
+                server.CreateToken();
+                server.CreateUser(username,userpwd,group);
+            }
         }
 
         protected override void Dispose(bool disposing)
