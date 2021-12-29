@@ -29,7 +29,7 @@ namespace RegisterAllServers
         public override void Initialize()
         {
             ServerApi.Hooks.GamePostInitialize.Register(this,OnPostInitialize);
-            AccountHooks.AccountCreate += OnRegister;
+            PlayerHooks.PlayerCommand += OnRegister;
             GeneralHooks.ReloadEvent += OnReload;
 
         }
@@ -46,19 +46,23 @@ namespace RegisterAllServers
             TShock.Log.ConsoleInfo($"[RegisterAllServers] 已加载 {ConfigUtils.config.Servers.Count} 个服务器");
         }
 
-        private void OnRegister(AccountCreateEventArgs e)
+        private void OnRegister(PlayerCommandEventArgs e)
         {
-            var username = e.Account.Name;
-            var userpwd = e.Account.Password;
-            var group = e.Account.Group;
-            foreach (var server in ConfigUtils.config.Servers)
+            if (e.CommandName=="register")
             {
-                server.CreateToken();
-                if (server.CreateUser(username, userpwd, group)["status"].ToString()=="200")
+                var username = e.Player.Name;
+                var userpwd = e.Parameters[0];
+                var group = TShock.Config.Settings.DefaultRegistrationGroupName;
+                TShock.Log.ConsoleInfo(userpwd);
+                foreach (var server in ConfigUtils.config.Servers)
                 {
-                    TShock.Log.ConsoleInfo($"[{username}] 成功在 [{server.ConvertToUrl()}] 注册");
+                    server.CreateToken();
+                    if (server.CreateUser(username, userpwd, group)["status"].ToString() == "200")
+                    {
+                        TShock.Log.ConsoleInfo($"[{username}] 成功在 [{server.ConvertToUrl()}] 注册");
+                    }
                 }
-            }
+            } 
         }
 
         protected override void Dispose(bool disposing)

@@ -7,7 +7,6 @@ D:\Projects\RegisterAllServers\bin\Debug\TShockAPI.dll
 D:\Projects\RegisterAllServers\bin\Debug\Newtonsoft.Json.xml
 D:\Projects\RegisterAllServers\bin\Debug\OTAPI.pdb
 D:\Projects\RegisterAllServers\bin\Debug\TerrariaServer.pdb
-D:\Projects\RegisterAllServers\obj\Debug\RegisterAllServers.csproj.AssemblyReference.cache
 D:\Projects\RegisterAllServers\obj\Debug\RegisterAllServers.csproj.CoreCompileInputs.cache
 D:\Projects\RegisterAllServers\obj\Debug\RegisterAllServers.csproj.CopyComplete
 D:\Projects\RegisterAllServers\obj\Debug\RegisterAllServers.dll
